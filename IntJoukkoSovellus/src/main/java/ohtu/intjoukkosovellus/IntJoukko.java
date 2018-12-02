@@ -21,16 +21,20 @@ public class IntJoukko {
     }
 
     public IntJoukko(int kapasiteetti, int kasvatusKoko) {
+        tarkistaKonstruktorinParametrit(kapasiteetti, kasvatusKoko);
+
+        taulukko = new int[kapasiteetti];
+        alkioidenLkm = 0;
+        this.kasvatusKoko = kasvatusKoko;
+    }
+
+    private void tarkistaKonstruktorinParametrit(int kapasiteetti, int kasvatusKoko) {
         if (kapasiteetti < 0) {
             throw new IndexOutOfBoundsException("Kapasitteetti ei saa olla negatiivinen");
         }
         if (kasvatusKoko < 0) {
             throw new IndexOutOfBoundsException("Kasvatuskoko ei saa olla negatiivinen");
         }
-
-        taulukko = new int[kapasiteetti];
-        alkioidenLkm = 0;
-        this.kasvatusKoko = kasvatusKoko;
     }
 
     public boolean lisaa(int luku) {
@@ -135,15 +139,20 @@ public class IntJoukko {
 
     public static IntJoukko leikkaus(IntJoukko syoteA, IntJoukko syoteB) {
         IntJoukko tuloste = new IntJoukko();
+
+        tuloste.lisaaKahdenJoukonLeikkaus(syoteA, syoteB);
+
+        return tuloste;
+    }
+
+    private void lisaaKahdenJoukonLeikkaus(IntJoukko syoteA, IntJoukko syoteB) {
         int[] aTaulu = syoteA.toIntArray();
 
         for (int i = 0; i < aTaulu.length; i++) {
             if (syoteB.kuuluu(aTaulu[i])) {
-                tuloste.lisaa(aTaulu[i]);
+                lisaa(aTaulu[i]);
             }
         }
-
-        return tuloste;
     }
 
     public static IntJoukko erotus(IntJoukko syoteA, IntJoukko syoteB) {
